@@ -1,6 +1,6 @@
-<?php include('layout/header.php') ?>
-<?php include('layout/nav.php'); ?>
-<?php include('layout/sidebar.php'); ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/header.php') ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/nav.php'); ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/sidebar.php'); ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -604,4 +604,4 @@
   </section>
   <!-- /.content -->
 </div>
-<?php include('layout/footer.php'); ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/footer.php'); ?>

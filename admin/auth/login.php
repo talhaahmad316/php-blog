@@ -1,6 +1,31 @@
 <?php 
-  include('./../../include/function.php');
-  include('./../../database/db.php');
+  include($_SERVER['DOCUMENT_ROOT'].'/blog/include/function.php');
+  include($_SERVER['DOCUMENT_ROOT'].'/blog/database/db.php');
+?>
+<?php
+  session_start();
+  if (isset($_POST['signin'])) 
+  {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    if (!empty($email) && !empty($password)) 
+    {
+      $sql = "SELECT * FROM `users` WHERE `email` = '".$email."' AND `password` ='".$password."'";
+      $result = mysqli_query($conn, $sql);
+      $row = mysqli_num_rows($result);
+
+      if($row > 0) {
+        $_SESSION['submit'] = true;
+        redirect('../index.php');
+      } 
+      else {
+        $message = 'Record not found';
+      }
+    } 
+    else {
+      $message = 'Email and password are required';
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,16 +46,20 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="assets/index2.html"><b>My</b> Blog</a>
+    <a href=""><b>My</b> Blog</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
-
-      <form action="assets/index3.html" method="post">
+      <?php if(isset($message)) { ?>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <?=$message?>
+        </div>
+      <?php } ?>
+      <form action="" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" class="form-control" name="email" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -38,7 +67,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" name="password" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -56,7 +85,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" name="signin" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>

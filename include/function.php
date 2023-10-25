@@ -7,3 +7,11 @@ function url($route = '')
 {
     return "http://localhost/blog/".$route;
 }
+function redirect($url = "")
+{
+    if(!empty($url))
+    {
+        return header("location:". $url);
+    }
+    return false;
+}

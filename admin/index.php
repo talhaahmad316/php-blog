@@ -6,7 +6,7 @@ if(isset($_GET['logout'])){
     header('location: admin/auth/login.php');
 }
 if(!isset($_SESSION['submit'])){
-    header('location: admin/auth/login.php');
+    header('location: ../admin/auth/login.php');
 }
 
 ?>

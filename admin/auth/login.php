@@ -1,26 +1,27 @@
 <?php
 include($_SERVER['DOCUMENT_ROOT'] . '/blog/include/function.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/blog/database/db.php');
-
+?>
+<?php
 session_start();
-
+$successMessage = '';
 if (isset($_POST['signin'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
-
   if (!empty($email) && !empty($password)) {
     $sql = "SELECT * FROM `users` WHERE `email` = '" . $email . "'";
     $result = mysqli_query($conn, $sql);
-
     if ($result) {
       $row = mysqli_num_rows($result);
-
       if ($row > 0) {
         $user = mysqli_fetch_assoc($result);
+        if($user["deleted_at"] != null){
+          $message = 'User inactive ';
+        }
         $enc_password = $user['password'];
-
         if (md5($password) == $enc_password) {
           $_SESSION['submit'] = true;
+          $successMessage = 'Login Successfully';
           redirect('../index.php');
         } else {
           $message = 'Password is incorrect';
@@ -43,7 +44,6 @@ if (isset($_POST['signin'])) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Log in - Blog</title>
-
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -53,16 +53,19 @@ if (isset($_POST['signin'])) {
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo url(); ?>assets/dist/css/adminlte.min.css">
 </head>
-
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
       <a href=""><b>My</b> Blog</a>
     </div>
-    <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">Sign in to start your session</p>
+        <?php if (!empty($successMessage)) { ?>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $successMessage ?>
+          </div>
+        <?php } ?>
         <?php if (isset($message)) { ?>
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <?= $message ?>
@@ -88,32 +91,23 @@ if (isset($_POST['signin'])) {
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
-                <input type="checkbox" id="remember">
+                <!-- <input type="checkbox" id="remember">
                 <label for="remember">
                   Remember Me
-                </label>
+                </label> -->
               </div>
             </div>
-            <!-- /.col -->
             <div class="col-4">
-              <button type="submit" name="signin" class="btn btn-primary btn-block">Sign In</button>
+              <button type="submit" id="submit" name="signin" class="btn btn-primary btn-block">Sign In</button>
             </div>
-            <!-- /.col -->
           </div>
         </form>
-        <!-- /.social-auth-links -->
-
-        <p class="mb-1">
-          <a href="forgot-password.html">I forgot my password</a>
-        </p>
-        <p class="mb-0">
+        <p class="mt-0">
           <a href="<?= url('admin/auth/register.php') ?>" class="text-center">Register a new membership</a>
         </p>
       </div>
-      <!-- /.login-card-body -->
     </div>
   </div>
-  <!-- /.login-box -->
 
   <!-- jQuery -->
   <script src="<?php echo url(); ?>assets/plugins/jquery/jquery.min.js"></script>

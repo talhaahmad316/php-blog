@@ -1,14 +1,4 @@
-<?php
-  session_start();
-  if(isset($_GET['logout'])){
-      session_destroy();
-      $_SESSION = [];
-      header('location: admin/auth/login.php');
-  }
-  if(!isset($_SESSION['submit'])){
-      header('location: ../admin/auth/login.php');
-  }
-?>
+
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/header.php') ?>
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/nav.php'); ?>
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/sidebar.php'); ?>
@@ -24,7 +14,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item active">Dashboard</li>
           </ol>
         </div>
       </div>

@@ -74,18 +74,19 @@
              </p>
            </a>
            <ul class="nav nav-treeview">
-             <li class="nav-item">
-               <a href="../categories/add_cat.php" class="nav-link">
+            <li class="nav-item">
+               <a href="<?= url('admin/category') ?>" class="nav-link">
                  <i class="far fa-circle nav-icon"></i>
-                 <p>Add Categories</p>
+                 <p>All Categories</p>
                </a>
              </li>
              <li class="nav-item">
-               <a href="view_cat.php" class="nav-link">
+               <a href="<?= url('admin/category/create.php') ?>" class="nav-link">
                  <i class="far fa-circle nav-icon"></i>
-                 <p>View Categories</p>
+                 <p>Create Category</p>
                </a>
              </li>
+             
            </ul>
          <li class="nav-item">
            <a href="#" class="nav-link">

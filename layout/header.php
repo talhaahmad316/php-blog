@@ -1,6 +1,15 @@
+<?php
+  session_start();
+  if(isset($_GET['logout'])){
+      session_destroy();
+      $_SESSION = [];
+      header('location: auth/login.php');
+  }
+?>
 <?php 
   include($_SERVER['DOCUMENT_ROOT'].'/blog/include/function.php');
   include($_SERVER['DOCUMENT_ROOT'].'/blog/database/db.php');
+  include($_SERVER['DOCUMENT_ROOT'].'/blog/admin/controller/CategoryController.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

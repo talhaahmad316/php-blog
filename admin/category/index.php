@@ -37,6 +37,7 @@
                     <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Category Name</th>
                             <th>Category Slug</th>
                             <th>Date</th>
@@ -48,6 +49,10 @@
                         <?php if (mysqli_num_rows($categories) > 0) { ?>
                         <?php while ($row = mysqli_fetch_array($categories)) { ?>
                             <tr >
+                                <td>
+                                    <img width="100px" src="<?=url()?>/assets/images/category/<?=$row['image']?>" alt="">
+                                    
+                                </td>
                                 <td><?=$row['title']?></td>
                                 <td><?=$row['slug']?></td>
                                 <td><?=$row['created_at']?></td>

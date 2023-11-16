@@ -24,5 +24,11 @@ class CategoryController
         $result = $this->conn->query("INSERT INTO categories(title,slug,image)VALUES('".$name."','".$slug."','".$file_name."')");
         return $result;
     }
+    public function delete()
+    {
+        $id = $_GET['id'];
+        $result = $this->conn->query("DELETE FROM categories WHERE id='".$id."'");
+        return $result;
+    }
 }
 

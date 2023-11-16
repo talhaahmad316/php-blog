@@ -1,4 +1,3 @@
-
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/header.php') ?>
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/nav.php'); ?>
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/sidebar.php'); ?>
@@ -48,7 +47,7 @@
                     <tbody>
                         <?php if (mysqli_num_rows($categories) > 0) { ?>
                         <?php while ($row = mysqli_fetch_array($categories)) { ?>
-                            <tr >
+                            <tr class="row_<?=$row['id']?>">
                                 <td>
                                     <img width="100px" src="<?=url()?>/assets/images/category/<?=$row['image']?>" alt="">
                                     
@@ -57,7 +56,9 @@
                                 <td><?=$row['slug']?></td>
                                 <td><?=$row['created_at']?></td>
                                 <td></td>
-                                <td></td>
+                                <td>
+                                    <button class="btn btn-danger delete_btn" value="<?=$row['id']?>">Delete</button>
+                                </td>
                             </tr>
                         <?php } ?>
                         <?php } else { ?>
@@ -74,3 +75,18 @@
   <!-- /.content -->
 </div>
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/footer.php'); ?>
+<script>
+$('.delete_btn').click(function(){
+    console.log($(this).val());
+    var id = $(this).val();
+    $.ajax({
+        url: "<?=url('include/route.php')?>",
+        type: "GET",
+        data:{'route':'delete_category','id':id},
+        success: function(res){
+            console.log(res);
+            $('.row_'+id).remove();
+        }
+    });
+})
+</script>

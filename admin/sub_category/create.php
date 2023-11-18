@@ -4,19 +4,20 @@
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/sidebar.php'); ?>
 <?php
     $category = new CategoryController($conn);
+    $categories = $category->index();
+    $sub_category = new SubCategoryController($conn);
     $result = false;
     if(isset($_POST['submit']))
     {
-        $result = $category->update();
+        $result = $sub_category->store();
     }
-    $cat = $category->show();
 ?>
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1 class="m-0">Create Category</h1>
+                <h1 class="m-0">Create SubCategory</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -43,9 +44,19 @@
                             </div>
                             <?php } ?>
                             <div class="form-group">
-                                <label for="CategoryName">Category Name</label>
-                                <input type="text" value="<?=$cat['title']?>" name="name" required class="form-control" id="CategoryName" placeholder="Category Name">
+                                <label for="CategoryName">Sub Category Name</label>
+                                <input type="text" name="name" required class="form-control" id="CategoryName" placeholder="Category Name">
                             </div>
+                            <div class="form-group">
+                                <label for="CategoryName">Select Category</label>
+                                <select class="form-control" name="category_id">
+                                <?php if (mysqli_num_rows($categories) > 0) { ?>
+                                    <?php while ($row = mysqli_fetch_array($categories)) { ?>
+                                        <option value='<?=$row['id']?>'><?=$row['title']?> </option>
+                                <?php } } ?>
+                                </select>
+                            </div>
+                            
                             <div class="form-group">
                                 <label for="exampleInputFile">File input</label>
                                 <div class="input-group">
@@ -53,9 +64,7 @@
                                         <input type="file" name="image" class="custom-file-input" id="exampleInputFile">
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
-                                    
                                 </div>
-                                <img width="100px" src="<?=url()?>/assets/images/category/<?=$cat['image']?>" alt="">
                             </div>
                         </div>
                         <div class="card-footer">

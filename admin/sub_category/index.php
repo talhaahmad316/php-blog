@@ -1,9 +1,9 @@
-<?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/header.php') ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/header.php'); ?>
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/nav.php'); ?>
 <?php include($_SERVER['DOCUMENT_ROOT'].'/blog/layout/sidebar.php'); ?>
 <?php
-    $category = new CategoryController($conn);
-    $categories = $category->index();
+    $category = new SubCategoryController($conn);
+    $sub_categories = $category->index();
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -37,27 +37,28 @@
                     <thead>
                         <tr>
                             <th>Image</th>
+                            <th>Sub Category Name</th>
+                            <th>Sub Category Slug</th>
                             <th>Category Name</th>
-                            <th>Category Slug</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (mysqli_num_rows($categories) > 0) { ?>
-                        <?php while ($row = mysqli_fetch_array($categories)) { ?>
-                            <tr class="row_<?=$row['id']?>">
+                        <?php if (mysqli_num_rows($sub_categories) > 0) { ?>
+                        <?php while ($row = mysqli_fetch_array($sub_categories)) { ?>
+                            <tr class="row_<?=$row['sub_category_id']?>">
                                 <td>
-                                    <img width="100px" src="<?=url()?>/assets/images/category/<?=$row['image']?>" alt="">
-                                    
+                                    <img width="100px" src="<?=url()?>/assets/images/sub_category/<?=$row['sub_category_image']?>" alt="">
                                 </td>
-                                <td><?=$row['title']?></td>
+                                <td><?=$row['name']?></td>
                                 <td><?=$row['slug']?></td>
+                                <td><?=$row['category_name']?></td>
                                 <td><?=$row['created_at']?></td>
                                 <td></td>
                                 <td>
-                                    <button class="btn btn-danger delete_btn" value="<?=$row['id']?>">Delete</button>
+                                    <button class="btn btn-danger delete_btn" value="<?=$row['sub_category_id']?>">Delete</button>
                                     <a href="edit.php?id=<?=$row['id']?>" class="btn btn-info">Edit</a>
                                 </td>
                             </tr>
@@ -83,7 +84,7 @@ $('.delete_btn').click(function(){
     $.ajax({
         url: "<?=url('include/route.php')?>",
         type: "GET",
-        data:{'route':'delete_category','id':id},
+        data:{'route':'delete_sub_category','id':id},
         success: function(res){
             console.log(res);
             $('.row_'+id).remove();

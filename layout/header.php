@@ -10,6 +10,7 @@
   include($_SERVER['DOCUMENT_ROOT'].'/blog/include/function.php');
   include($_SERVER['DOCUMENT_ROOT'].'/blog/database/db.php');
   include($_SERVER['DOCUMENT_ROOT'].'/blog/admin/controller/CategoryController.php');
+  include($_SERVER['DOCUMENT_ROOT'].'/blog/admin/controller/SubCategoryController.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -15,3 +15,4 @@ function redirect($url = "")
     }
     return false;
 }
+?>
